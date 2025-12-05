@@ -53,32 +53,33 @@ def main():
         )
         return
 
-    st.subheader("Input Features")
+    st.subheader("Enter Laptop Specifications")
 
     with st.form("prediction_form"):
         user_values = {}
         for feature in feature_cols:
             col_stats = stats.loc[feature]
-            default_val = float(col_stats["mean"])
+            default_val = None
             user_values[feature] = st.number_input(
                 feature,
+                step=1 if feature != 'Weight' and feature != 'Screen size' else 0.1,
                 value=default_val,
                 help=f"Typical range: {col_stats['min']:.2f} – {col_stats['max']:.2f}",
             )
 
-        submitted = st.form_submit_button("Predict Price")
+        submitted = st.form_submit_button("Predict")
     if submitted:
         X_new = pd.DataFrame([user_values])[feature_cols]
-        rf_pred = float(rf_model.predict(X_new)[0]) - 10000
-        xgb_pred = float(xgb_model.predict(X_new)[0]) - 10000
+        rf_pred = float(rf_model.predict(X_new)[0]) 
+        xgb_pred = float(xgb_model.predict(X_new)[0]) 
         avg_pred = (rf_pred + xgb_pred) / 2.0
-        st.subheader("Predicted Price")
+        st.subheader("Price Prediction")
         col1, col2, col3 = st.columns(3)
-        col1.metric("Random Forest", f"{rf_pred:,.0f}")
-        col2.metric("XGBoost", f"{xgb_pred:,.0f}")
-        col3.metric("Average", f"{avg_pred:,.0f}")
+        col1.metric("Random Forest", f"{rf_pred:,.0f} EGB")
+        col2.metric("XGBoost", f"{xgb_pred:,.0f} EGB")
+        col3.metric("Average", f"{avg_pred:,.0f} EGB")
         st.caption(
-            "Made by *Waddah, Hammam, Eman, and Mnahel*"
+            "       Made by *Waddah, Hammam, Eman, and Mnahel*"
         )
 
 if __name__ == "__main__":
