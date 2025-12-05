@@ -119,6 +119,11 @@ Typical EDA steps:
   - Price vs. RAM
   - Price vs. Storage
   - Price vs. Screen size or Resolution
+- **Pie chart visualizations** showing distributions:
+  - Top 10 CPU Distribution
+  - Top 5 GPU Distribution
+  - Top 5 Storage Distribution
+  - Top 10 Price Distribution
 - Identify and possibly **remove outliers**, saving the resulting dataset as:
   - `Dataset/data_without_outliers.csv`.
 
